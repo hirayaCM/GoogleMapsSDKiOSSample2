@@ -102,19 +102,6 @@ typedef NS_ENUM(NSInteger, markerState) {
 }
 
 /**
- *  現在の可視領域のGMSCoordinateBoundsを返す
- *
- *  @return `GMSCoordinateBounds`
- */
-- (GMSCoordinateBounds *)visiableCoordinateBounds
-{
-    CLLocationCoordinate2D bottomLeftCoord = self.mapView.projection.visibleRegion.nearLeft;
-    CLLocationCoordinate2D topRightCoord = self.mapView.projection.visibleRegion.farRight;
-    
-    return [[GMSCoordinateBounds alloc]initWithCoordinate:topRightCoord coordinate:bottomLeftCoord];
-}
-
-/**
  *  markerが地図の可視領域に存在するか
  *
  *  @param marker `GMSMarker`
@@ -123,7 +110,7 @@ typedef NS_ENUM(NSInteger, markerState) {
  */
 - (BOOL)containsMarkerInMap:(GMSMarker *)marker
 {
-    return [self.visiableCoordinateBounds containsCoordinate:marker.position];
+    return [self.mapView.projection containsCoordinate:marker.position];
 }
 
 - (NSArray *)markers
